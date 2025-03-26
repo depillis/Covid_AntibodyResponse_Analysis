@@ -1,0 +1,99 @@
+<DATAFILE>
+
+[FILEINFO]
+file='nonlinearMixedModelDataSet.csv'
+delimiter = comma
+header = {subject, dsfd, nabFlow, isConvalesced, sex, dose1Type, dose2Type, eventId, amount, a0}
+
+[CONTENT]
+subject = {use=identifier}
+dsfd = {use=time}
+nabFlow = {use=observation, name=nabFlow, type=continuous}
+isConvalesced = {use=covariate, type=categorical}
+sex = {use=covariate, type=categorical}
+dose1Type = {use=covariate, type=categorical}
+eventId = {use=eventidentifier}
+amount = {use=amount}
+
+<MODEL>
+
+[COVARIATE]
+input = {dose1Type, isConvalesced, sex}
+
+dose1Type = {type=categorical, categories={Moderna, Pfizer}}
+isConvalesced = {type=categorical, categories={No, Yes}}
+sex = {type=categorical, categories={F, M, NA}}
+
+[INDIVIDUAL]
+input = {A0_pop, omega_A0, r1_pop, omega_r1, r2_pop, omega_r2, r3_pop, omega_r3, r4_pop, omega_r4, corr_r2_r1, corr_r3_r1, corr_r3_r2, corr_r4_r1, corr_r4_r2, corr_r4_r3, dose1Type, beta_r1_dose1Type_Pfizer, isConvalesced, beta_r1_isConvalesced_Yes, beta_r2_dose1Type_Pfizer, beta_r2_isConvalesced_Yes, beta_r3_dose1Type_Pfizer, beta_r3_isConvalesced_Yes, beta_r4_isConvalesced_Yes, beta_A0_isConvalesced_Yes}
+
+dose1Type = {type=categorical, categories={Moderna, Pfizer}}
+isConvalesced = {type=categorical, categories={No, Yes}}
+
+DEFINITION:
+A0 = {distribution=logitNormal, typical=A0_pop, covariate=isConvalesced, coefficient={0, beta_A0_isConvalesced_Yes}, sd=omega_A0}
+r1 = {distribution=logitNormal, typical=r1_pop, covariate={dose1Type, isConvalesced}, coefficient={{0, beta_r1_dose1Type_Pfizer}, {0, beta_r1_isConvalesced_Yes}}, sd=omega_r1}
+r2 = {distribution=logitNormal, typical=r2_pop, covariate={dose1Type, isConvalesced}, coefficient={{0, beta_r2_dose1Type_Pfizer}, {0, beta_r2_isConvalesced_Yes}}, sd=omega_r2}
+r3 = {distribution=logitNormal, typical=r3_pop, covariate={dose1Type, isConvalesced}, coefficient={{0, beta_r3_dose1Type_Pfizer}, {0, beta_r3_isConvalesced_Yes}}, sd=omega_r3}
+r4 = {distribution=logitNormal, typical=r4_pop, covariate=isConvalesced, coefficient={0, beta_r4_isConvalesced_Yes}, sd=omega_r4}
+correlation = {level=id, r(r2, r1)=corr_r2_r1, r(r3, r1)=corr_r3_r1, r(r4, r1)=corr_r4_r1, r(r3, r2)=corr_r3_r2, r(r4, r2)=corr_r4_r2, r(r4, r3)=corr_r4_r3}
+
+[LONGITUDINAL]
+input = {a, b}
+
+file = '4ParamModel.txt'
+
+DEFINITION:
+nabFlow = {distribution=logitNormal, min=-0.00954434, max=1.01979, prediction=A, errorModel=combined1(a, b)}
+
+<FIT>
+data = nabFlow
+model = nabFlow
+
+<PARAMETER>
+A0_pop = {value=0.0001798723776757, method=MLE}
+a = {value=0.3553174322772459, method=MLE}
+b = {value=0.2085706415112283, method=MLE}
+beta_A0_isConvalesced_Yes = {value=14.04117347969669, method=MLE}
+beta_r1_dose1Type_Pfizer = {value=-1.097537900354918, method=MLE}
+beta_r1_isConvalesced_Yes = {value=-2.849694655028658, method=MLE}
+beta_r2_dose1Type_Pfizer = {value=2.455581013895106, method=MLE}
+beta_r2_isConvalesced_Yes = {value=-4.286126198839545, method=MLE}
+beta_r3_dose1Type_Pfizer = {value=-0.6966287191156453, method=MLE}
+beta_r3_isConvalesced_Yes = {value=-0.5690059536124948, method=MLE}
+beta_r4_isConvalesced_Yes = {value=-1.523475611530868, method=MLE}
+c = {value=1, method=FIXED}
+corr_r2_r1 = {value=-0.2836518496694528, method=MLE}
+corr_r3_r1 = {value=-0.1893050299398335, method=MLE}
+corr_r3_r2 = {value=-0.0339905318675984, method=MLE}
+corr_r4_r1 = {value=-0.2403273117821818, method=MLE}
+corr_r4_r2 = {value=0.8015195338205583, method=MLE}
+corr_r4_r3 = {value=-0.3865474487710634, method=MLE}
+omega_A0 = {value=1, method=MLE}
+omega_r1 = {value=1, method=MLE}
+omega_r2 = {value=1, method=MLE}
+omega_r3 = {value=1, method=MLE}
+omega_r4 = {value=1, method=MLE}
+r1_pop = {value=0.0913404242698178, method=MLE}
+r2_pop = {value=0.0190649695231006, method=MLE}
+r3_pop = {value=0.0018121562326812, method=MLE}
+r4_pop = {value=0.0114976567407194, method=MLE}
+
+<MONOLIX>
+
+[TASKS]
+populationParameters()
+individualParameters(method = {conditionalMean, conditionalMode })
+fim(method = Linearization)
+logLikelihood(method = Linearization)
+plotResult(method = {indfits, parameterdistribution, covariancemodeldiagnosis, covariatemodeldiagnosis, obspred, vpc, residualsscatter, residualsdistribution, randomeffects, saemresults })
+
+[SETTINGS]
+GLOBAL:
+exportpath = 'currentPlan11optimalMarch2025'
+dataandmodelnexttoproject = yes
+
+POPULATION:
+exploratoryiterations = 1000
+simulatedannealingiterations = 1000
+

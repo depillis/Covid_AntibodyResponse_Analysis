@@ -1,0 +1,9 @@
+parameter,covariate,statistics,p-value,test
+r1,beta_r1_dose1Type_Pfizer,-19.6949,<2.2e-16,t-Test
+r1,beta_r1_isConvalesced_Yes,-76.9283,<2.2e-16,t-Test
+r2,beta_r2_dose1Type_Pfizer,41.3571,<2.2e-16,t-Test
+r2,beta_r2_isConvalesced_Yes,-63.79,<2.2e-16,t-Test
+r3,beta_r3_dose1Type_Pfizer,-75.5703,<2.2e-16,t-Test
+r3,beta_r3_isConvalesced_Yes,-94.0875,<2.2e-16,t-Test
+r4,beta_r4_isConvalesced_Yes,-17.0546,<2.2e-16,t-Test
+A0,beta_A0_isConvalesced_Yes,43.3585,<2.2e-16,t-Test

@@ -1,0 +1,16 @@
+eta,covariate,statistics,p-value,test
+eta_r1,dose1Type,0.000127086,0.991028,Anova
+eta_r1,isConvalesced,0.489886,0.485636,Anova
+eta_r1,sex,0.39239,0.676508,Anova
+eta_r2,dose1Type,0.26798,0.605856,Anova
+eta_r2,isConvalesced,0.139235,0.709848,Anova
+eta_r2,sex,0.311266,0.733248,Anova
+eta_r3,dose1Type,1.97954,0.162602,Anova
+eta_r3,isConvalesced,0.199157,0.656387,Anova
+eta_r3,sex,1.11689,0.331469,Anova
+eta_r4,dose1Type,0.518132,0.473353,Anova
+eta_r4,isConvalesced,0.00638714,0.936464,Anova
+eta_r4,sex,0.329189,0.720308,Anova
+eta_A0,dose1Type,0.714219,0.400105,Anova
+eta_A0,isConvalesced,0.547864,0.460961,Anova
+eta_A0,sex,1.92218,0.151819,Anova

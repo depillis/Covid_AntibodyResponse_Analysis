@@ -1,0 +1,9 @@
+parameter,statistics(lin),p-value(lin)
+beta_r1_dose1Type_Pfizer,3.7376,0.000186
+beta_r1_isConvalesced_Yes,2.93303,0.00336
+beta_r2_dose1Type_Pfizer,0.800197,0.424
+beta_r2_isConvalesced_Yes,2.81904,0.00482
+beta_r3_dose1Type_Pfizer,0.713771,0.475
+beta_r3_isConvalesced_Yes,1.422,0.155
+beta_r4_isConvalesced_Yes,5.76816,8.01e-09
+beta_A0_isConvalesced_Yes,0.235028,0.814

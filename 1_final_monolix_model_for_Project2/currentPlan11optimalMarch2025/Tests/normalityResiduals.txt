@@ -1,0 +1,4 @@
+residuals,statistics,p-value,test
+IWRES_nabFlow,0.994167,0.212192,Shapiro-Wilk
+PWRES_nabFlow,1,1,Shapiro-Wilk
+NPDE_nabFlow,0.603917,<2.2e-16,Shapiro-Wilk

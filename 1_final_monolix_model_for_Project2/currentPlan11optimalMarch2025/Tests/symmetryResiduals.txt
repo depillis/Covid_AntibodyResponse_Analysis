@@ -1,0 +1,4 @@
+residuals,statistics,p-value,test
+IWRES_nabFlow,-0.39186,0.695162,Symmetry
+PWRES_nabFlow,nan,nan,Symmetry
+NPDE_nabFlow,-3.0349,0.00240619,Symmetry

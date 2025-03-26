@@ -1,0 +1,39 @@
+DESCRIPTION: 
+Nonlinear ODE Model developed by LdeP
+4 parameter NAb levels model (LdeP)  - July 18, 2022
+Updated to align with 4-parameter model used in NAIVE data set, paper 1.
+Random variables: r1, r2, r3, r4
+Dose strength p=1
+"Oral" dose lasting 1 day Tk0=0
+A0=V0=0 (Naive population)
+K1, K2 fixed: K1=10; K2=50;
+
+[LONGITUDINAL]
+; input={r1, r2, r3, r4, Tlag, A0}; This allows a lag, and fits A0
+input={r1, r2, r3, r4, A0}; Fit A0 inside this script;
+
+;a0 = {use = regressor}; use data for a0
+
+PK:
+; depot(target = C, p = 2, Tlag); p=2 means dose is scaled by 2. Tlag means we allow for a time lag before the vaccine dose stimulates antigen production.
+depot(target = C, p = 1, Tk0=1); "Oral dose" over 1 day, so fix absorpbtion Tk0=1 for now.
+
+EQUATION:
+odeType = stiff
+
+; t_0 = 0  ; If we don't specify this, Monolix figures it out.
+; A_0 = a0 ; Mess with this later.; use data for a0
+; A_0 = 0  ; Assume naive population.
+
+A_0 = A0; Let A0 be fit by the code
+V_0 = 0 ; Assume no initial treatment.
+
+ddt_A = r1*C+ r2*C*A + A*(r3 - r4*A); Original 4-parameter model.
+
+K1 = 10; 
+K2 = 50;
+ddt_C = -(K1*C)/(K2 + C) ; We fix k1 and k2 to align with the values used in Paper 1.
+
+
+OUTPUT:
+output = {A}
